@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <!-- 2.在页面中声明一个将要被，vue 所控制的 DOM 区域。。 -->
+    <div id="app">
+        <input type="text" v-bind:placeholder="tips">
+    </div>
+
+    <!-- 1.导入 vue.js 的 script 脚本文件。。。 -->
+    <script src="./lib/vue@2.6.min.js"></script>
+    <script>
+        // 3.创建 vm 实例对象（vue 实例对象。。）
+        const vm = new Vue({
+            // 指定 vm 实例要控制页面的哪个区域。。
+            el: '#app',
+            // 指定 model 数据源。。
+            data: {
+                tips: '请输入用户名'
+            }
+        })
+    </script>
+</body>
+</html>
