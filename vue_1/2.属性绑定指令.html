@@ -10,6 +10,9 @@
     <!-- 2.在页面中声明一个将要被，vue 所控制的 DOM 区域。。 -->
     <div id="app">
         <input type="text" v-bind:placeholder="tips">
+
+        <!-- title 的属性值是一个字符串‘box’加数据 index 的变量。。。值为：box3 -->
+        <div :title="'box' + index">这是一个 div</div>
     </div>
 
     <!-- 1.导入 vue.js 的 script 脚本文件。。。 -->
@@ -21,7 +24,8 @@
             el: '#app',
             // 指定 model 数据源。。
             data: {
-                tips: '请输入用户名'
+                tips: '请输入用户名',
+                index: 3
             }
         })
     </script>

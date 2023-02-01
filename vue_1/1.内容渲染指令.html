@@ -13,6 +13,9 @@
         <p>性别：{{ gender }}</p>   <!-- vue 提供 {{}} 语法（插值表达式），专门来解决 v-text 指令覆盖问题。 -->
         <!-- v-text 指令和插值表达式只能渲染纯文本内容。如果要把包含HTML标签的字符串渲染为页面的HTML元素则需要用到v-html这个指令:
  -->
+        <p>{{ number + 1 }}</p>
+        <p>{{ ok ? 'YES' : 'NO' }}</p>      <!-- 可以放入 js 语句进行运行。。 -->
+        <p>{{ message.split('').reverse().join('') }}</p>
         <p v-html="info"></p>
     </div>
 

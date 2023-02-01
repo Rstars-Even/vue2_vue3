@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <div>count 的值是：{{ count }}</div>
+        <button v-on:click="add(1, $event)">+n</button>     <!-- 可以用（）进行传参。。$event 是 vue 的事件对象的固定写法。。 -->
+        <button @click="sub">-1</button>            <!-- 可以用 @ 简写事件。-->
+
+        <a href="http://www.baidu.com" @click.prevent="show">跳转到百度。。</a>     <!-- vue可以用 prevent 事件修饰阻止标签默认事件。-->
+    </div>
+
+    <script src="./lib/vue@2.6.min.js"></script>
+    <script>
+        const vm = new Vue({
+            el: '#app',
+            data: {
+                count: 0,
+            },
+            // 定义事件的处理函数。。。
+            methods: {
+                add (n, e) {   //n 是1，e 是事件对象。。。
+                    vm.count += n
+                    console.log(vm === this);       //true 所以可以用 this 代替 vm 实例对象。。。
+                },
+                sub (e) {       //只有形参，没有实参 e 就是事件对象。。。
+                    this.count -= 1
+
+                    if (this.count % 2 === 0) {
+                        // 偶数
+                        e.target.style.backgroundColor = 'red';
+                    } else {
+                        // 奇数
+                        e.target.style.backgroundColor = '';
+                    }
+                },
+                show (e) {
+                    console.log(666);
+                    // e.preventDefault();     //原生阻止标签默认事件写法。。。
+                }
+            }
+        })
+    </script>
+</body>
+</html>
