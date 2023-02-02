@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <div v-if="flag">这是 v-if 控制的元素。。</div>     <!-- 它们根据 flag 的值来显示元素的显示和隐藏。 -->
+        <!--   -->
+        <div v-show="flag">这是 v-show 控制的元素。。</div>
+
+        <div>
+            <div v-if="type === 'A'">优秀</div>     <!-- 根据 js 表达式，渲染相应元素，v-else 只有和 v-if 配套使用才生效。。 -->
+            <div v-else-if="type === 'B'">良好</div>
+            <div v-else>及格</div>
+        </div>
+    </div>
+
+    <script src="./lib/vue@2.6.min.js"></script>
+    <script>
+        const vm = new Vue({
+            el: '#app',
+            data: {
+                flag: true,
+                type: 'B'
+            },
+        })
+    </script>
+</body>
+</html>

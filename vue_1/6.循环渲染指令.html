@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <ul>
+            <!-- item 是循环的数组的每一项值，需要索引时要加 小括号 -->
+            <!-- 在 .vue 文件中用 v-for 时要加 key 属性。值只能是数字或字符串。且不能重复。 -->
+            <!-- key 值尽量别用 index 用 id  使用 key 能提升性能和减少列表混乱。。-->
+            <li v-for="(item, index) in list" :key="item.id">{{ index }}{{ item.name }}</li>
+        </ul>
+    </div>
+
+    <script src="./lib/vue@2.6.min.js"></script>
+    <script>
+        const vm = new Vue({
+            el: '#app',
+            data: {
+                list: [
+                    { id: 1, name: '张三' },
+                    { id: 2, name: '李四' },
+                    { id: 3, name: '王五' }
+                ]
+            },
+        })
+    </script>
+</body>
+</html>
