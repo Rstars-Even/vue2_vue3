@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>使用过滤器。。</title>
+  <!-- <link rel="stylesheet" href="./lib/bootstrap.css">
+  <link rel="stylesheet" href="./css/brandlist.css"> -->
+</head>
+
+<body>
+
+  <div id="app">
+    <!-- 使用过滤器。。 -->
+    <span>{{ message | capi }}</span>
+  </div>
+  <script src="./lib/vue@2.6.min.js"></script>
+  <script>
+    const vm = new Vue({
+      el: '#app',
+      data: {
+        message: 'hello world!',
+      },
+      filters: {        //过滤器，必须定义到 filters 节点下。它本质上也是个函数。
+        capi(val) {     //val：永远都是 ‘|’ 符号前面的那个值。
+            const first = val.charAt(0).toUpperCase();
+            const other = val.slice(1);
+            //过滤器中一定要有个返回值。
+            return first+ other;
+        }
+      }
+    })
+  </script>
+</body>
+
+</html>
