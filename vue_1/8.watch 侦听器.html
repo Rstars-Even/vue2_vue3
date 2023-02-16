@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title></title>
+  <!-- <link rel="stylesheet" href="./lib/bootstrap.css">
+  <link rel="stylesheet" href="./css/brandlist.css"> -->
+</head>
+
+<body>
+
+  <div id="app">
+    <!-- 使用侦听器。。 -->
+    <input type="text" v-model="info.message">
+  </div>
+  <script src="./lib/vue@2.6.min.js"></script>
+  <script>
+    const vm = new Vue({
+      el: '#app',
+      data: {
+        value: 'Hello world',
+        info: {
+            message: '前端真卷啊！！',
+        },
+      },
+      //所有侦听器都应该放到 watch 节点下。。
+      watch: {
+        value(newVal, oldVa) {    //监听 value 值的变化。
+            //  newVal是“变化后的新值"，oldVal 是"变化之前的旧值”
+            console.log(newVal, oldVal);
+        },
+        info: {  //定义对象格式的侦听器。。
+            handler(newVal, oldVal) {
+                console.log(newVal, oldVal);
+            },
+            immerdiate: true,   //immerdiate 的作用是侦听器在进入页面时是否自动触发一次。默认为：false
+            deep: true,     //deep 开启深度监听，只要对象中的属性变化了就会触发侦听器。
+        },
+        // 如果要侦听对象的子属性，要包裹一层单引号。
+        'info.message'(newVal) {
+            console.log(newVal);
+        }
+      }
+    })
+  </script>
+</body>
+
+</html>
