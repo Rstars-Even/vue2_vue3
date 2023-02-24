@@ -5,7 +5,9 @@
                 <CommonAside/>
             </el-aside>
             <el-container>
-                <el-header>Header</el-header>
+                <el-header>
+                    <CommonHeader></CommonHeader>
+                </el-header>
                 <el-main>
                     <h1>我是 Main 页面。。。</h1>
                     <!-- 路由嵌套。。。 -->
@@ -18,11 +20,21 @@
 
 <script>
 import CommonAside from '@/components/CommonAside.vue';
+import CommonHeader from '@/components/CommonHeader.vue';
 
     export default {
     data() {
         return {};
     },
-    components: { CommonAside }
+    components: { 
+        CommonAside,
+        CommonHeader
+    }
 }
 </script>
+
+<style lang="less" scoped>
+    .el-header {
+        padding: 0px;
+    }
+</style>
