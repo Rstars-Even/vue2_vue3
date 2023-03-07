@@ -1,7 +1,7 @@
 <template>
     <div>
         <el-container>
-            <el-aside width="200px">
+            <el-aside width="auto">
                 <CommonAside/>
             </el-aside>
             <el-container>
@@ -26,7 +26,7 @@ import CommonHeader from '@/components/CommonHeader.vue';
     data() {
         return {};
     },
-    components: { 
+    components: {
         CommonAside,
         CommonHeader
     }
@@ -36,5 +36,8 @@ import CommonHeader from '@/components/CommonHeader.vue';
 <style lang="less" scoped>
     .el-header {
         padding: 0px;
+    }
+    .el-menu {
+        border-right: none;
     }
 </style>
