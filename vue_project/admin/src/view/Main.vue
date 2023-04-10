@@ -9,7 +9,7 @@
                     <CommonHeader></CommonHeader>
                 </el-header>
                 <el-main>
-                    <h1>我是 Main 页面。。。</h1>
+                    <!-- <h1>我是 Main 页面。。。</h1> -->
                     <!-- 路由嵌套。。。 -->
                     <router-view></router-view>
                 </el-main>
