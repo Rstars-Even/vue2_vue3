@@ -1,6 +1,6 @@
 <template>
     <el-row>
-        <el-col :span="8">
+        <el-col :span="8" style="padding-right: 10px;">
             <el-card class="box-card">
                 <div class="user">
                     <img src="../assets/avatar.jpg" alt="">
@@ -22,7 +22,7 @@
                 </el-table>
             </el-card>
         </el-col>
-        <el-col :span="16">
+        <el-col :span="16" style="padding-left: 10px;">
             <div class="num">
                 <el-card v-for="(item, index) in countData" :key="item.name" :body-style="{ display: 'flex', padding: 0}">
                     <i class="icon" :class="`el-icon-${item.icon}`" :style="{ background: item.color }"></i>
@@ -32,11 +32,26 @@
                     </div>
                 </el-card>
             </div>
+            <!-- 折线图。。 -->
+            <el-card style="height: 280px;">
+                <div ref="echarts1" style="height: 280px;"></div>
+            </el-card>
+            <!-- 柱状图和扇形图。 -->
+            <div class="graph">
+                <el-card style="height: 260px;">
+                    <div ref="echarts2" style="height: 260px;"></div>
+                </el-card>
+                <el-card style="height: 260px;">
+                    <div ref="echarts3" style="height: 240px;"></div>
+                </el-card>
+            </div>
         </el-col>
     </el-row>
 </template>
 
 <script>
+    import { getData } from '../api'
+    import * as echarts from 'echarts'
     export default {
         data() {
             return {
@@ -121,6 +136,117 @@
                     },
                 ]
             }
+        },
+        mounted() {
+            getData().then(({ data }) => {
+                const { tableData } = data.data;
+                console.log('------data.data-----', data.data);
+                this.tableData = tableData;
+
+                // 折线图数据处理。。
+                // 基于获取的 DOM，初始化 echarts .
+                const echarts1 = echarts.init(this.$refs.echarts1)
+                // 指定表的配置和数据。
+                var echarts1Option = {}
+                // 处理数据 xAxis
+                const { orderData, userData, videoData } = data.data
+                const xAxis = Object.keys(orderData.data[0])
+                const xAxisData = {
+                    data: xAxis
+                }
+                echarts1Option.xAxis = xAxisData
+                echarts1Option.yAxis = {}
+                echarts1Option.legend = xAxisData
+                echarts1Option.series = []
+                xAxis.forEach(key => {
+                    echarts1Option.series.push({
+                        name: key,
+                        data: orderData.data.map(item => item[key]),
+                        type: 'line'
+                    })
+                })
+                // 使用指定的配置和数据显示图表。
+                echarts1.setOption(echarts1Option)
+
+                // 柱状图。
+                const echarts2 = echarts.init(this.$refs.echarts2)
+                const echarts2Option = {
+                    legend: {
+                        // 图例文字颜色
+                        textStyle: {
+                        color: "#333",
+                        },
+                    },
+                    grid: {
+                        left: "20%",
+                    },
+                    // 提示框
+                    tooltip: {
+                        trigger: "axis",
+                    },
+                    xAxis: {
+                        type: "category", // 类目轴
+                        data: userData.map(item => item.date),
+                        axisLine: {
+                        lineStyle: {
+                            color: "#17b3a3",
+                        },
+                        },
+                        axisLabel: {
+                        interval: 0,
+                        color: "#333",
+                        },
+                    },
+                    yAxis: [
+                        {
+                        type: "value",
+                        axisLine: {
+                            lineStyle: {
+                            color: "#17b3a3",
+                            },
+                        },
+                        },
+                    ],
+                    color: ["#2ec7c9", "#b6a2de"],
+                    series: [
+                        {
+                            name: "新增用户",
+                            data: userData.map(item => item.new),
+                            type: 'bar'
+                        },
+                        {
+                            name: "活跃用户",
+                            data: userData.map(item => item.active),
+                            type: 'bar'
+                        }
+                    ],
+                }
+                echarts2.setOption(echarts2Option)
+
+                // 饼状图。
+                const echarts3 = echarts.init(this.$refs.echarts3)
+                const echarts3Option = {
+                    tooltip: {
+                        trigger: "item",
+                    },
+                    color: [
+                        "#0f78f4",
+                        "#dd536b",
+                        "#9462e5",
+                        "#a6a6a6",
+                        "#e1bb22",
+                        "#39c362",
+                        "#3ed1cf",
+                    ],
+                    series: [
+                        {
+                            data: videoData,
+                            type: 'pie'
+                        }
+                    ],
+                }
+                echarts3.setOption(echarts3Option)
+            })
         }
     }
 </script>
@@ -191,6 +317,14 @@
         .el-card {
             width: 32%;
             margin-bottom: 20px;
+        }
+    }
+    .graph {
+        margin-top: 20px;
+        display: flex;
+        justify-content: space-between;
+        .el-card {
+            width: 48%;
         }
     }
 </style>
