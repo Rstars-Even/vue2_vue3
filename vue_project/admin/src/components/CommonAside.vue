@@ -100,9 +100,10 @@
       handleClose(key, keyPath) {
         console.log(key, keyPath);
       },
-      clickMenu(item) {
+      clickMenu(item) {//点击菜单。。
         console.log('--------路由跳转。。-----', item);
         this.$router.push(item.path);
+        this.$store.commit('selectMenu', item)
       }
     },
     computed: {
