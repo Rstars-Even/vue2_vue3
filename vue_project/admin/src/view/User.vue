@@ -15,15 +15,16 @@
                 </el-form-item>
                 <el-form-item label="性别" prop="sex">
                     <el-select v-model="form.sex" placeholder="请选择">
-                        <el-option label="男" value="1"></el-option>
-                        <el-option label="女" value="0"></el-option>
+                        <el-option label="男" :value="1"></el-option>
+                        <el-option label="女" :value="0"></el-option>
                     </el-select>
                 </el-form-item>
                 <el-form-item label="出生日期" prop="birth">
                     <el-date-picker
                         v-model="form.birth"
                         type="date"
-                        placeholder="选择日期">
+                        placeholder="选择日期"
+                        value-format="yyyy-MM-DD">
                     </el-date-picker>
                 </el-form-item>
                 <el-form-item label="地址" prop="addr">
@@ -38,11 +39,23 @@
             </span>
         </el-dialog>
         <div class="manage-header">
-            <el-button type="primary" @click="dialogVisible = true">
+            <el-button type="primary" @click="handleAdd">
                 + 新增
             </el-button>
-
+            <!-- form 搜索区域。 -->
+            <el-form :inline="true" :model="userForm">
+                <el-form-item>
+                    <el-input placeholder="请输入名称" v-model="userForm.name"></el-input>
+                </el-form-item>
+                <el-form-item>
+                    <el-button type="primary" @click="onSubmit">查询</el-button>
+                </el-form-item>
+            </el-form>
+        </div>
+        <div class="common-table">
             <el-table
+                stripe
+                height="90%"
                 :data="tableData"
                 style="width: 100%">
                 <el-table-column
@@ -76,12 +89,19 @@
                     </template>
                 </el-table-column>
             </el-table>
+            <div class="pager">
+                <el-pagination
+                    layout="prev, pager, next"
+                    :total="total"
+                    @current-change="handlePage">
+                </el-pagination>
+            </div>
         </div>
     </div>
 </template>
 
 <script>
-import { getUser } from "../api";
+import { getUser, addUser, editUser, delUser } from "../api";
     export default {
         data() {
             return {
@@ -110,7 +130,16 @@ import { getUser } from "../api";
                         { required: true, message: '请输入地址' },
                     ],
                 },
-                tableData: []
+                tableData: [],
+                modalType: 0,    //0表示新增，1表示编辑。
+                total: 0,   //当前的总条数。
+                pageData: {
+                    page: 1,
+                    limit: 10,
+                },
+                userForm: {
+                    name: ''
+                }
             }
         },
         methods: {
@@ -118,7 +147,16 @@ import { getUser } from "../api";
                 this.$refs.form.validate((valid) => {
                     if (valid) {        //填写的表单是否检测通过。。
                         console.log(']-----this.form---', this.form);
-
+                        if (this.modalType === 0) {
+                            addUser(this.form).then(() => {
+                                // 重新刷新列表数据。
+                                this.getList()
+                            })
+                        } else {
+                            editUser(this.form).then(() => {
+                                this.getList()
+                            })
+                        }
 
                         // 清空表单数据。
                         this.$refs.form.resetFields();
@@ -134,16 +172,80 @@ import { getUser } from "../api";
             },
             cancel() {
                 this.handleClose()
-            }
+            },
+            // 新增事件
+            handleAdd () {
+                this.dialogVisible = true
+                this.modalType === 0
+            },
             // 表格编辑。。
+            handleEdit(row) {
+                this.dialogVisible = true
+                this.modalType === 1
+                // 需要对数据进行深拷贝。
+                this.form = JSON.parse(JSON.stringify(row))
+            },
             // 表格删除。。
+            handleDelete(row) {
+                this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
+                    confirmButtonText: '确定',
+                    cancelButtonText: '取消',
+                    type: 'warning'
+                }).then(() => {
+                    delUser({ id: row.id }).then(() => {
+                        this.$message({
+                            type: 'success',
+                            message: '删除成功!'
+                        });
+                        this.getList()
+                    })
+                }).catch(() => {
+                    this.$message({
+                        type: 'info',
+                        message: '已取消删除'
+                    });
+                });
+            },
+            // 获取列表数据。
+            getList() {
+                getUser({ params: {...this.userForm, ...this.pageData} }).then(({ data }) => {
+                    console.log('------data---', data);
+                    this.tableData = data.list;
+                    this.total = data.count || 0;
+                })
+            },
+            // 选择页码的回调。。
+            handlePage(val) {
+                // console.log(val);
+                this.pageData.page = val;
+                this.getList()
+            },
+            // 列表查询事件。
+            onSubmit() {
+                this.getList()
+            }
         },
         mounted() {
-            getUser().then(({ data }) => {
-                console.log('------data---', data);
-                this.tableData = data.list;
-            })
+            this.getList()
         }
-
     }
 </script>
+<style lang="less" scoped>
+    .manage {
+        height: 90%;
+        .manage-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .common-table {
+            position: relative;
+            height: calc(100% - 62px);
+            .pager {
+                position: absolute;
+                bottom: 0;
+                right: 20px;
+            }
+        }
+    }
+</style>

@@ -11,11 +11,11 @@ export const getUser = (params) => {
     return http.get('/user/getUser', params)
 }
 export const addUser = (data) => {
-    return http.get('/user/add', data)
+    return http.post('/user/add', data)
 }
 export const editUser = (data) => {
-    return http.get('/user/del', data)
+    return http.post('/user/edit', data)
 }
 export const delUser = (data) => {
-    return http.get('/user/del', data)
+    return http.post('/user/del', data)
 }
