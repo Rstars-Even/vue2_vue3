@@ -6,6 +6,7 @@ import Main from "../view/Main.vue";
 import Mall from "../view/Mall.vue";
 import PageOne from "../view/PageOne.vue";
 import PageTwo from "../view/PageTwo.vue";
+import Login from "../view/Login.vue";
 Vue.use(VueRouter)
 const originalPush = VueRouter.prototype.push
 VueRouter.prototype.push = function push(location) {
@@ -27,6 +28,10 @@ const routes = [
             { path: '/page2', name: 'page2', component: PageTwo},
         ]
     },
+    {
+        path: '/login',
+        component: Login,
+    }
 ]
 
 const router = new VueRouter({
