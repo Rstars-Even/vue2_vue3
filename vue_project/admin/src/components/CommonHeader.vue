@@ -35,7 +35,9 @@ import Cookie from "js-cookie"
         },
         handleClick(command) {
             if (command === 'cancel') {
+                // 退出登录。。
                 Cookie.remove('token')
+                Cookie.remove('menu')
                 this.$router.push('/login')
             }
         }
