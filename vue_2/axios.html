@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script src="../vue_1/lib/axios.js"></script>
+    <script>
+        // async function fun() {
+        //     // 解构赋值时使用重命名。
+        //     // 调用 axios 之后，使用 async/await 进行简化。
+        //     // 使用解构赋值，从 axios 封装的大对象中，把 data 属性解构出来，再进行重命名。
+        //     const { data: res } = await axios({
+        //         methods: 'GET',
+        //         url: 'http://beta.sukiechat.com/ticket',
+        //         params: {       //get 请求时用的参数。
+        //             uid: 102
+        //         },
+        //     // data: {}'        post 请求时用的参数。
+        //     })
+        //     console.log(res);
+        // };
+        // fun();
+        async function fun() {
+            const { data: res } = await axios.get('http://beta.sukiechat.com/ticket', {
+                params: {
+                    uid: '102',
+                }
+            })
+            console.log(res);
+
+            const { data: result } = await axios.post('http://beta.sukiechat.com/XXX', { size: 1, page: 20 })
+            console.log(result);
+        };
+        fun();
+
+    </script>
+</body>
+</html>
