@@ -2,8 +2,8 @@
   <div id="app">
     <img alt="Vue logo" src="./assets/logo.png">
     <HelloWorld msg="Welcome to Your Vue.js App"/>
-    <MyCount/>
-    <MyCount/>
+    <MyCount :init='666'></MyCount>
+    <MyCount></MyCount>
   </div>
 </template>
 
