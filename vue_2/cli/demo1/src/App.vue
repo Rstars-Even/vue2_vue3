@@ -1,7 +1,8 @@
 <template>
   <div id="app">
     <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <button @click="testRef">testRef</button>
+    <HelloWorld ref="testRef2"/>
     <MyCount :init='666'></MyCount>
     <MyCount></MyCount>
     app 父组件的 count {{ appCount }}
@@ -36,6 +37,10 @@ export default {
   methods: {
     getNewConut(val) {
       this.appCount = val
+    },
+    testRef() {
+      console.log(this.$refs.testRef2);   //可以通过这个引用获取子组件的 data 数据和方法。
+      this.$refs.testRef2.msgFromLeft = 'ref 改变子组件的内容。。。'
     }
   }
 }
