@@ -19,14 +19,19 @@
         <!-- 商品价格 -->
         <span class="goods-price">￥{{ price }}</span>
         <!-- 商品的数量 -->
+        <Counter :count="count" :id="id"/>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import Counter from '@/components/Counter/Counter.vue'
 export default {
-  props: ['id', 'name', 'pic', 'price', 'state'],
+  components: {
+    Counter
+  },
+  props: ['id', 'name', 'pic', 'price', 'state', 'count'],
   methods: {
     stateChange(e) {
       const newState = e.target.checked
