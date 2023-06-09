@@ -1,7 +1,9 @@
 <template>
   <div class="app-container">
     <Headers title="购物车案例"/>
-    <Goods @state-change="getNewState" v-for="item in list" :key="item.goods_id" :id="item.goods_id" :name="item.goods_name" :pic="item.goods_img" :price="item.goods_price" :state="item.goods_state" :count="item.goods_count"/>
+    <Goods @state-change="getNewState" v-for="item in list" :key="item.goods_id" :id="item.goods_id" :name="item.goods_name" :pic="item.goods_img" :price="item.goods_price" :state="item.goods_state" :count="item.goods_count">
+      <Counter :count="item.goods_count" :id="item.goods_id"></Counter>
+    </Goods>
     <Footer @change_select="getNewAllState" :amount="amt" :isFull="select_all" :total="total"/>
 </div>
 </template>
@@ -11,6 +13,7 @@ import axios from 'axios'
 import Headers from '@/components/Header/Header.vue'
 import Goods from '@/components/Goods/Goods.vue'
 import Footer from '@/components/Footer/Footer.vue'
+import Counter from '@/components/Counter/Counter.vue'
 import bus from '@/components/eventBus.js';
 export default {
   data() {
@@ -75,7 +78,8 @@ export default {
   components: {
     Headers,
     Goods,
-    Footer
+    Footer,
+    Counter
   }
 }
 </script>

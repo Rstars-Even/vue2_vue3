@@ -5,7 +5,16 @@
     <keep-alive include="Right,Left">
       <component :is="comName"></component>
     </keep-alive> -->
-    <Left>123</Left>
+    <Left>
+      <template v-slot:default="scope">
+        <h5>插槽内容。。11111。</h5>
+        {{ scope.text1 }}
+      </template>
+      <template #default2="{ text }">
+        <h5>插槽内容。。,.2222</h5>
+        {{ text }}
+      </template>
+    </Left>
     <Right>123</Right>
 
   </div>
