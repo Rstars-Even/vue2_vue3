@@ -18,7 +18,9 @@ const router = new VueRouter({
     // 首次进入页面时，通过 redirect 属性，转到 /home 对应的路由规则。
     { path: '/', redirect: '/home' },
     { path: '/home', component: Home },
-    { path: '/movie', component: Movie },
+
+    // 根据 id 的值展示对应的电影信息。
+    { path: '/movie/:id', component: Movie, props: true },
     {
       // 父级路由
       path: '/about',
