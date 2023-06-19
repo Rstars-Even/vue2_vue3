@@ -10,6 +10,7 @@
     <router-link to="/movie/2?name=zs&age=20">鹅城</router-link>
     <router-link to="/movie/3">笑傲江湖</router-link>
     <router-link to="/about">关于</router-link>
+    <router-link to="/main">---main---</router-link>
     <hr>
     <!-- 这个组件是 路由插件提供，给组件渲染的占位符。 -->
     <router-view></router-view>

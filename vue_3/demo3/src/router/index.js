@@ -6,6 +6,8 @@ import Movie from '@/components/Movie.vue'
 import About from '@/components/About.vue'
 import Tab1 from '@/components/teb/Tab1.vue'
 import Tab2 from '@/components/teb/Tab2.vue'
+import Login from '@/components/Login.vue'
+import Main from '@/components/Main.vue'
 
 // 把 VueRouter 安装为 Vue 项目的插件。
 // Vue.use() 函数的作用，就是用来安装插件的。
@@ -18,6 +20,8 @@ const router = new VueRouter({
     // 首次进入页面时，通过 redirect 属性，转到 /home 对应的路由规则。
     { path: '/', redirect: '/home' },
     { path: '/home', component: Home },
+    { path: '/login', component: Login },
+    { path: '/main', component: Main },
 
     // 根据 id 的值展示对应的电影信息。
     { path: '/movie/:id', component: Movie, props: true },
@@ -34,6 +38,22 @@ const router = new VueRouter({
       ]
     }
   ]
+})
+
+router.beforeEach(function (to, from, next) {
+  console.log('-----------------', to.path)
+  if (to.path === '/main') {
+    const token = localStorage.getItem('token')
+    console.log('--------token---------', token)
+    if (token) {
+      next() // 查看是否登录。
+    } else {
+      next('/login') // 没登录跳转到登录页面。
+    }
+  } else {
+    // 查看的页面不需要登录直接放行。。
+    next()
+  }
 })
 
 export default router
