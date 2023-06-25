@@ -12,7 +12,7 @@
         </div>
         <!-- 三张图片 -->
         <div class="thumb-box" v-if="cover.type === 3">
-          <img v-for="item in cover.images" :src="item" :key="item" alt="" class="thumb">
+          <img v-for="(item, index) in cover.images" :src="item" :key="index" alt="" class="thumb">
         </div>
       </template>
       <!-- label 区域的插槽 -->
