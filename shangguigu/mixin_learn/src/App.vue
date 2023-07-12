@@ -4,7 +4,7 @@
       <div class="todo-wrap">
         <Top :addTodo="addTodo"/>
         <ListTab :todo_list="todo_list" :del_todos="del_todos"/>
-        <Bottom/>
+        <Bottom :todo_list="todo_list" :allcheck="allcheck" :removeAll="removeAll"/>
       </div>
     </div>
   </div>
@@ -24,11 +24,7 @@ export default {
   },
   data() {
     return {
-      todo_list: [
-        {id: '001', title: '学习', done: true},
-        {id: '002', title: '娱乐', done: false},
-        {id: '003', title: '运动', done: true},
-      ],
+      todo_list: JSON.parse(localStorage.getItem('todos')) || [],
     }
   },
   methods: {
@@ -37,7 +33,21 @@ export default {
       this.todo_list.unshift(item)
     },
     del_todos(id) {
-      this.todo_list = this.todo_list.filter( todo => todo.id !== id);
+      this.todo_list = this.todo_list.filter(todo => todo.id !== id);
+    },
+    allcheck(done) {
+      this.todo_list.forEach(todo => todo.done = done);
+    },
+    removeAll() {
+      this.todo_list = this.todo_list.filter(todo => !todo.done)
+    }
+  },
+  watch: {
+    todo_list: {
+      deep: true,
+      handler(val) {
+        localStorage.setItem('todos', JSON.stringify(val))
+      }
     }
   }
 }
