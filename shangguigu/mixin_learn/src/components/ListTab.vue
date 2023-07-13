@@ -1,6 +1,6 @@
 <template>
   <ul class="todo-main">
-    <Item v-for="el in todo_list" :key="el.id" :item="el" :del_todos="del_todos"></Item>
+    <Item v-for="el in todo_list" :key="el.id" :item="el"></Item>
   </ul>
 </template>
 
@@ -11,7 +11,7 @@ export default {
   components: {
     Item
   },
-  props: ['todo_list', 'del_todos']
+  props: ['todo_list']
 }
 </script>
 

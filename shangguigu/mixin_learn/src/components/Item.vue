@@ -3,19 +3,35 @@
     <label>
       <!-- <input type="checkbox" :checked="item.done"/> -->
       <input type="checkbox" v-model="item.done"/>
-      <span>{{ item.title }}</span>
+      <span v-if="!item.isEdit">{{ item.title }}</span>
+      <input v-else type="text" :value="item.title" @blur="handleBlue(item, $event)"/>
     </label>
     <button class="btn btn-danger" @click="del(item.id)">删除</button>
+    <button v-show="!item.isEdit" class="btn btn-danger" @click="handleEdit(item)">编辑</button>
   </li>
 </template>
 
 <script>
 export default {
   name: 'Item',
-  props: ["item", 'del_todos'],
+  props: ["item"],
   methods: {
     del(id) {
-      this.del_todos(id)
+      if(confirm('你确定删除吗？')) {
+        this.$bus.$emit('del_todos', id)
+      }
+    },
+    handleBlue(item, e) {
+      item.isEdit = false
+      if(!e.target.value.trim()) return alert('输入不能为空！')
+      this.$bus.$emit('updateTodo', item.id, e.target.value)
+    },
+    handleEdit(item) {
+      if(item.hasOwnProperty('isEdit')) {
+        item.isEdit = true
+      } else {
+        this.$set(item, 'isEdit', true)
+      }
     }
   },
 }

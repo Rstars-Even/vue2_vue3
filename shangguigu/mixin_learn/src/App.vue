@@ -3,7 +3,7 @@
     <div class="todo-container">
       <div class="todo-wrap">
         <Top :addTodo="addTodo"/>
-        <ListTab :todo_list="todo_list" :del_todos="del_todos"/>
+        <ListTab :todo_list="todo_list"/>
         <Bottom :todo_list="todo_list" :allcheck="allcheck" :removeAll="removeAll"/>
       </div>
     </div>
@@ -27,13 +27,21 @@ export default {
       todo_list: JSON.parse(localStorage.getItem('todos')) || [],
     }
   },
+  mounted() {
+    this.$bus.$on('del_todos', this.del_todos)
+    this.$bus.$on('updateTodo', this.updateTodo)
+  },
   methods: {
     addTodo(item) {
       console.log('---------item-------', item);
       this.todo_list.unshift(item)
     },
     del_todos(id) {
+      console.log('---------id-------', id);
       this.todo_list = this.todo_list.filter(todo => todo.id !== id);
+    },
+    updateTodo(id, title) {
+      this.todo_list.forEach(todo => {if(todo.id === id) todo.title = title});
     },
     allcheck(done) {
       this.todo_list.forEach(todo => todo.done = done);
