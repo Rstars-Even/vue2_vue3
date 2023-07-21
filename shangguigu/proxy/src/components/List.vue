@@ -1,11 +1,14 @@
 <template>
     <div class="row">
-        <div class="card" v-for="user in users" :key="user.login">
+        <div v-show="info.users.length" class="card" v-for="user in info.users" :key="user.login">
             <a :href="user.html_url" target="_blank">
                 <img :src="user.avatar_url" style='width: 100px'/>
             </a>
             <p class="card-text">{{ user.login }}</p>
         </div>
+        <h3 v-show="info.isFirst">欢迎使用。。。</h3>
+        <h3 v-show="info.isLoading">数据加载中。。。</h3>
+        <h3 v-show="info.errMsg">{{ info.errMsg }}</h3>
     </div>
 </template>
 
@@ -15,12 +18,17 @@ export default {
     name: 'List',
     data() {
         return {
-            users: []
+            info: {
+                users: [],
+                isFirst: true,
+                isLoading: false,
+                errMsg: '',
+            }
         }
     },
     mounted() {
-        this.$bus.$on('getUser', (users) => {
-            this.users = users
+        this.$bus.$on('getUser', (dataObj) => {
+            this.info = {...this.info, ...dataObj}
         })
     }
 }
