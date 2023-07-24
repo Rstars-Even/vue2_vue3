@@ -1,0 +1,21 @@
+{
+  "name": "mixin_learn",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build"
+  },
+  "dependencies": {
+    "animate.css": "^4.1.1",
+    "core-js": "^3.6.4",
+    "nanoid": "^4.0.2",
+    "vue": "^2.6.11",
+    "vuex": "^3.6.2"
+  },
+  "devDependencies": {
+    "@vue/cli-plugin-babel": "~4.3.1",
+    "@vue/cli-service": "~4.3.1",
+    "vue-template-compiler": "^2.6.11"
+  }
+}
