@@ -1,15 +1,16 @@
 <template>
   <div id="app">
-
+    <Count/>
   </div>
 </template>
 
 <script>
-// import Top from './components/Top.vue'
+import Count from './components/Count.vue'
 
 export default {
   name: 'App',
   components: {
+    Count
   },
   data() {
     return {
