@@ -1,21 +1,25 @@
 <template>
-  <h3>姓名: {{ name }}</h3>
+  <!-- <h3>姓名: {{ name }}</h3>
   <h3>年龄：{{ age }}</h3>
   <h3>工作岗位：{{ job.type }}</h3>
   <h3>月收入：{{ job.salary }}</h3>
   <button @click="fun">点击事件，改变数据</button>
   <hr>
   <h3>工作岗位：{{ job2.type }}</h3>
-  <h3>月收入：{{ job2.salary }}</h3>
+  <h3>月收入：{{ job2.salary }}</h3> -->
+  <!-- <HelloWorld msg="HelloWorld" @custom="custom"/> -->
+  <Test/>
 </template>
 
 <script>
 import {ref, reactive} from 'vue'
+// import HelloWorld from './components/HelloWorld.vue'
+import Test from './components/Test.vue'
 
 export default {
   name: 'App',
   components: {
-    // HelloWorld
+    Test
   },
   setup() {
     let name = ref('张三')
@@ -39,13 +43,17 @@ export default {
       job2.type = '运维'
       job2.salary = '60k'
     }
+    function custom(val) {
+      alert(`------自定义事件测试。。。--------${val}`)
+    }
 
     return {
       name,
       age,
       job,
       job2,
-      fun
+      fun,
+      custom
     }
   }
 }
