@@ -1,22 +1,28 @@
 <template>
-   <!-- <h3>鼠标坐标：{{ point }}</h3> -->
-   <h4>{{ person }}</h4>
-   <h4>姓名：{{ name }}</h4>
-   <h4>年龄：{{ age }}</h4>
-   <h4>薪资：{{ job.j1.salary }}</h4>
-    <button @click="name+='!'">修改姓名</button>
+    <!-- <h3>鼠标坐标：{{ point }}</h3> -->
+    <h4>{{ person }}</h4>
+    <h4>姓名：{{ name }}</h4>
+    <h4>年龄：{{ age }}</h4>
+    <h4>薪资：{{ job.j1.salary }}</h4>
+    <button @click="name += '!'">修改姓名</button>
     <button @click="age++">增长年龄</button>
     <button @click="job.j1.salary++">我要涨薪</button>
     <hr>
     <input v-model="text" type="text">
     <h2>{{ text }}</h2>
+    <hr>
+    <Popup />
 </template>
 
 <script>
 
 import { reactive, toRefs, customRef } from 'vue'
+import Popup from './Popup.vue'
 export default {
     name: 'Test',
+    components: {
+        Popup
+    },
     setup() {
         let person = reactive({
             name: '张三',
